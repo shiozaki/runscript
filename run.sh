@@ -13,4 +13,5 @@ echo ppn: $ppn
 export OMP_NUM_THREADS=$ppn
 
 # execute
-mpirun -hosts $AZ_BATCH_HOST_LIST -perhost 1 -np $nodes singularity exec /usr/bin/a.out
+cmd=$(eval echo "${SHIPYARD_SINGULARITY_COMMAND}")
+mpirun -hosts $AZ_BATCH_HOST_LIST -perhost 1 -np $nodes $cmd /usr/bin/a.out
