@@ -14,4 +14,5 @@ export OMP_NUM_THREADS=$ppn
 
 # execute
 cmd=$(eval echo "${SHIPYARD_SINGULARITY_COMMAND}")
+echo $cmd
 mpirun -hosts $AZ_BATCH_HOST_LIST -perhost 1 -np $nodes $cmd /usr/bin/a.out
