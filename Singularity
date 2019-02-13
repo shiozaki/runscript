@@ -5,9 +5,8 @@ From: ubuntu:16.04
     /usr/bin/a.out
 
 %environment
-    export LD_LIBRARY_PATH=/usr/local/openmpi/lib:/usr/local/lib64:/usr/local/lib:/usr/local/boost/lib:/opt/intel/compilers_and_libraries_2019.2.187/linux/compiler/lib/intel64_lin:/opt/intel//compilers_and_libraries_2019.2.187/linux/mpi/intel64/libfabric/lib:/opt/intel//compilers_and_libraries_2019.2.187/linux/mpi/intel64/lib/release:/opt/intel//compilers_and_libraries_2019.2.187/linux/mpi/intel64/lib:/opt/intel/compilers_and_libraries_2019.2.187/linux/tbb/lib/intel64_lin/gcc4.7:/opt/intel/compilers_and_libraries_2019.2.187/linux/compiler/lib/intel64_lin:/opt/intel/compilers_and_libraries_2019.2.187/linux/mkl/lib/intel64_lin:/usr/local/lib:/usr/local/bagel/lib:$LD_LIBRARY_PATH
+    export LD_LIBRARY_PATH=/usr/lib/libibverbs:/usr/local/lib:/usr/local/bagel/lib:$LD_LIBRARY_PATH
     export PATH=/usr/local/bagel/bin:$PATH
-    export LD_LIBRARY_PATH=/usr/lib/libibverbs:$LD_LIBRARY_PATH
 
 %labels
     AUTHOR shiozaki.toru@gmail.com
@@ -21,11 +20,13 @@ From: ubuntu:16.04
 
     # Taken from https://github.com/CHPC-UofU/Singularity-ubuntu-mpi
     # IB stuff, based on https://community.mellanox.com/docs/DOC-2431
-    apt-get install -y dkms infiniband-diags libibverbs* ibacm librdmacm* libmlx4* libmlx5* mstflint libibcm.* libibmad.* libibumad* opensm srptools libmlx4-dev librdmacm-dev rdmacm-utils ibverbs-utils perftest vlan ibutils
-    apt-get install -y libtool autoconf automake build-essential ibutils ibverbs-utils rdmacm-utils infiniband-diags perftest librdmacm-dev libibverbs-dev libmlx4-1 numactl libnuma-dev autoconf automake gcc g++ git libtool pkg-config
+    apt-get install -y dkms infiniband-diags libibverbs* ibacm librdmacm* libmlx4* libmlx5* mstflint libibcm.* libibmad.* libibumad* opensm srptools
+    apt-get install -y libmlx4-dev librdmacm-dev rdmacm-utils ibverbs-utils perftest vlan
+    apt-get install -y ibutils ibverbs-utils rdmacm-utils infiniband-diags perftest librdmacm-dev libibverbs-dev libmlx4-1 numactl libnuma-dev
     apt-get install -y libnl-3-200 libnl-route-3-200 libnl-route-3-dev libnl-utils
     export LD_LIBRARY_PATH=/usr/lib/libibverbs:$LD_LIBRARY_PATH
 
+    # Seems Intel MPI wants this
     apt-get install -y libdapl-dev
 
     mkdir temp
@@ -43,3 +44,7 @@ From: ubuntu:16.04
     cd ../
     rm -rf ./temp
     rm -rf /opt/intel
+    apt-get -y remove --purge wget
+    apt-get -y remove --purge apt-transport-https
+    apt-get -y autoremove
+    apt-get clean
