@@ -13,8 +13,6 @@ echo ppn: $ppn
 export OMP_NUM_THREADS=$ppn
 
 # execute
-find /opt/intel -name libmpi.so.12
-cat /opt/intel/bin/compilervars.sh
 source /opt/intel/bin/compilervars.sh intel64 
 export SINGULARITYENV_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
 echo $SINGULARITYENV_LD_LIBRARY_PATH
