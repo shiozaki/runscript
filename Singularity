@@ -41,5 +41,5 @@ From: ubuntu:16.04
     /opt/intel/impi/2019.2.187/intel64/bin/mpicxx -I/opt/intel/impi/2019.2.187/intel64/include main.cc
     cp a.out /usr/bin/
     cd ../
-#    rm -rf ./temp
-#    rm -rf /opt/intel
+    rm -rf ./temp
+    rm -rf /opt/intel
